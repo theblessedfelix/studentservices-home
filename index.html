@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBTC | Student Services Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b, #0f172a);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-launch {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-launch:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-6">
+
+    <button onclick="editClassTitle()" class="fixed top-6 right-6 p-3 bg-white/5 hover:bg-white/10 rounded-full border border-white/10 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+    </button>
+    
+
+    <div class="max-w-4xl w-full space-y-12">
+        <div class="text-center space-y-4">
+            <h1 id="displayTitle" class="text-5xl md:text-6xl font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500">
+                Student Services 
+            </h1>
+            <p class="text-indigo-400 font-bold tracking-[0.3em] uppercase text-sm">Attendance Gateway</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-[2.5rem] max-w-md mx-auto shadow-2xl">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 text-center">Active Student Services Member</label>
+            <select id="adminSelect" onchange="saveAdmin()" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-6 py-4 text-lg font-bold outline-none focus:ring-2 ring-indigo-500 transition-all appearance-none cursor-pointer">
+                <option value="">-- Choose Name --</option>
+                <option value="Mercy">Mercy</option>
+                <option value="Rebecca">Rebecca</option>
+                <option value="Jeremiah">Jeremiah</option>
+                <option value="Blessing">Blessing</option>
+            </select>
+            <p id="adminStatus" class="mt-4 text-center text-xs text-emerald-500 font-medium opacity-0 transition-opacity">Session logged in successfully</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a href="https://studentservices-three.vercel.app/" class="btn-launch glass-card p-10 rounded-[3rem] group border-emerald-500/20 hover:border-emerald-500/50">
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <span class="text-4xl group-hover:scale-110 transition-transform">🥇</span>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter">Level 1</h3>
+                    <p class="text-slate-400 text-sm">First Year Students <br> Attendance Engine</p>
+                    <div class="pt-4">
+                        <span class="px-6 py-2 bg-emerald-600 rounded-full font-bold text-xs uppercase">Launch App</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" onclick="alert('Level 2 Link Coming Soon!')" class="btn-launch glass-card p-10 rounded-[3rem] group border-indigo-500/20 hover:border-indigo-500/50">
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <span class="text-4xl group-hover:scale-110 transition-transform">🥈</span>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter text-slate-300">Level 2</h3>
+                    <p class="text-slate-400 text-sm">Second Year Students <br> Internal Records</p>
+                    <div class="pt-4">
+                        <span class="px-6 py-2 bg-slate-700 rounded-full font-bold text-xs uppercase">Coming Soon</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+    const PIN = "1234"; // Admin Password
+
+    // 1. Initialize Data on Page Load
+ 
+
+    // 2. Save Admin selection locally
+    function saveAdmin() {
+        const admin = document.getElementById("adminSelect").value;
+        if(admin) {
+            localStorage.setItem("active_admin", admin);
+            const status = document.getElementById("adminStatus");
+            status.style.opacity = "1";
+            setTimeout(() => status.style.opacity = "0", 3000);
+        }
+    }
+
+    // 3. The Central Launch Function
+    function launchApp(level) {
+        const admin = document.getElementById("adminSelect").value;
+        
+        // Ensure an admin is selected before proceeding
+        if (!admin) {
+            alert("Please select a Student Services Member first!");
+            return;
+        }
+
+        // Check if user wants to change the title
+        let currentTitle = localStorage.getItem(`rbtc_v25_title_L${level}`) || "Blood Covenant";
+        const wantsToEdit = confirm(`Current Title: "${currentTitle}"\nWould you like to modify the title before launching?`);
+        
+        if (wantsToEdit) {
+            const password = prompt("Enter Admin PIN to modify class title:");
+            if (password === PIN) {
+                const newTitle = prompt(`Enter new Class Title for Level ${level}:`, currentTitle);
+                if (newTitle && newTitle.trim() !== "") {
+                    currentTitle = newTitle.trim();
+                    localStorage.setItem(`rbtc_v25_title_L${level}`, currentTitle);
+                    document.getElementById("displayTitle").innerText = currentTitle;
+                }
+            } else {
+                alert("Incorrect PIN. Proceeding with default title.");
+            }
+        }
+
+        // 4. Construct Redirect URL
+        const baseUrl = level === 1 
+            ? "https://studentservices-three.vercel.app/" 
+            : "https://your-level-2-url.vercel.app/"; // Replace with your L2 link when ready
+
+        // Build the URL with data attached
+        const finalUrl = `${baseUrl}?title=${encodeURIComponent(currentTitle)}&admin=${encodeURIComponent(admin)}`;
+        
+        // Launch!
+        window.location.href = finalUrl;
+    }
+
+    // Keep the gear icon functionality as a shortcut to just edit titles
+    function editClassTitle() {
+        const password = prompt("Enter Admin PIN to modify class titles:");
+        if (password === PIN) {
+            const level = prompt("Which level do you want to modify? (1 or 2)");
+            if (level === "1" || level === "2") {
+                const newTitle = prompt(`Enter new Title for Level ${level}:`);
+                if (newTitle) {
+                    localStorage.setItem(`rbtc_v25_title_L${level}`, newTitle);
+                    document.getElementById("displayTitle").innerText = newTitle;
+                    alert("Title updated successfully!");
+                }
+            }
+        } else {
+            alert("Unauthorized.");
+        }
+    }
+</script>
+</body>
+</html>
